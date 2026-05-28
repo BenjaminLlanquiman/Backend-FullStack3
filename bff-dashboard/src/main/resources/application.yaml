@@ -1,16 +1,14 @@
 server:
-  port: 8083
+  port: ${PORT:8083}
 
 spring:
   application:
     name: bff-dashboard
 
-# URLs de los microservicios
 services:
-  ventas-url: http://localhost:8081
-  inventario-url: http://localhost:8082
+  ventas-url: https://ms-ventas-2c24.onrender.com
+  inventario-url: https://ms-inventario-ar3g.onrender.com
 
-# Circuit Breaker config
 resilience4j:
   circuitbreaker:
     instances:
