@@ -59,7 +59,7 @@ public class InventarioServiceImpl implements InventarioService {
     @Override
     @Transactional(readOnly = true)
     public List<ProductoResponseDTO> listarProductos() {
-        return productoRepository.findAll()
+        return productoRepository.findByActivoTrue()
                 .stream().map(this::toResponseDTO).collect(Collectors.toList());
     }
 
@@ -166,8 +166,6 @@ public class InventarioServiceImpl implements InventarioService {
         return movimientoRepository.findByFechaMovimientoBetween(inicio, fin)
                 .stream().map(this::toMovimientoDTO).collect(Collectors.toList());
     }
-
-    // ── helpers ──────────────────────────────────────────────
 
     private ProductoResponseDTO toResponseDTO(Producto p) {
         return ProductoResponseDTO.builder()
