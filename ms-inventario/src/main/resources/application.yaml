@@ -5,15 +5,14 @@ spring:
   application:
     name: ms-inventario
   datasource:
-    url: ${DATABASE_URL}
+    url: jdbc:postgresql://dpg-d8carsmrnols739g9lug-a/ventasdb_ttom
+    username: ventas_user
+    password: 5JpBszdsK64EbxWhrQrJlIqHyVxBzNnd
     driver-class-name: org.postgresql.Driver
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
     properties:
       hibernate:
-        format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
