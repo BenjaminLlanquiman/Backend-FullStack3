@@ -22,13 +22,11 @@ public class DashboardController {
     private final VentasClientService ventasClient;
     private final InventarioClientService inventarioClient;
 
-    // Endpoint principal del dashboard — agrega todo
     @GetMapping
     public ResponseEntity<DashboardDTO> obtenerDashboard() {
         return ResponseEntity.ok(dashboardService.obtenerDashboard());
     }
 
-    // Proxy a ms-ventas
     @GetMapping("/ventas")
     public ResponseEntity<List<VentaDTO>> listarVentas() {
         return ResponseEntity.ok(ventasClient.obtenerVentas());
@@ -39,7 +37,6 @@ public class DashboardController {
         return ResponseEntity.ok(ventasClient.obtenerVentasPorEstado(estado));
     }
 
-    // Proxy a ms-inventario
     @GetMapping("/productos")
     public ResponseEntity<List<ProductoDTO>> listarProductos() {
         return ResponseEntity.ok(inventarioClient.obtenerProductos());
@@ -50,7 +47,17 @@ public class DashboardController {
         return ResponseEntity.ok(inventarioClient.obtenerProductosStockBajo());
     }
 
-    // Health check
+    @DeleteMapping("/productos/{id}")
+    public ResponseEntity<Void> eliminarProducto(@PathVariable Long id) {
+        inventarioClient.eliminarProducto(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/productos/{id}")
+    public ResponseEntity<ProductoDTO> actualizarProducto(@PathVariable Long id, @RequestBody ProductoDTO producto) {
+        return ResponseEntity.ok(inventarioClient.actualizarProducto(id, producto));
+    }
+
     @GetMapping("/health")
     public ResponseEntity<String> health() {
         return ResponseEntity.ok("BFF Dashboard activo en puerto 8083");

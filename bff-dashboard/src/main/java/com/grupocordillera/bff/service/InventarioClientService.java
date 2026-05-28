@@ -36,7 +36,25 @@ public class InventarioClientService {
                 .block();
     }
 
-    // Fallbacks
+    @CircuitBreaker(name = "inventario-cb", fallbackMethod = "fallbackEliminar")
+    public void eliminarProducto(Long id) {
+        inventarioWebClient.delete()
+                .uri("/api/v1/inventario/productos/" + id)
+                .retrieve()
+                .bodyToMono(Void.class)
+                .block();
+    }
+
+    @CircuitBreaker(name = "inventario-cb", fallbackMethod = "fallbackActualizar")
+    public ProductoDTO actualizarProducto(Long id, ProductoDTO producto) {
+        return inventarioWebClient.put()
+                .uri("/api/v1/inventario/productos/" + id)
+                .bodyValue(producto)
+                .retrieve()
+                .bodyToMono(ProductoDTO.class)
+                .block();
+    }
+
     public List<ProductoDTO> fallbackProductos(Exception e) {
         log.warn("Circuit Breaker activo para ms-inventario: {}", e.getMessage());
         return Collections.emptyList();
@@ -45,5 +63,14 @@ public class InventarioClientService {
     public List<ProductoDTO> fallbackStockBajo(Exception e) {
         log.warn("Circuit Breaker activo para ms-inventario/stock-bajo: {}", e.getMessage());
         return Collections.emptyList();
+    }
+
+    public void fallbackEliminar(Long id, Exception e) {
+        log.warn("Circuit Breaker activo al eliminar producto: {}", e.getMessage());
+    }
+
+    public ProductoDTO fallbackActualizar(Long id, ProductoDTO producto, Exception e) {
+        log.warn("Circuit Breaker activo al actualizar producto: {}", e.getMessage());
+        return null;
     }
 }
