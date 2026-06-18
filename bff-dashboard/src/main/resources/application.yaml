@@ -1,14 +1,14 @@
 server:
   port: ${PORT:8083}
-
+ 
 spring:
   application:
     name: bff-dashboard
-
+ 
 services:
   ventas-url: https://ms-ventas-2c24.onrender.com
   inventario-url: https://ms-inventario-ar3g.onrender.com
-
+  auth-url: https://ms-auth-n0q7.onrender.com   
 resilience4j:
   circuitbreaker:
     instances:
@@ -22,3 +22,4 @@ resilience4j:
         failureRateThreshold: 50
         waitDurationInOpenState: 10s
         permittedNumberOfCallsInHalfOpenState: 2
+ 
