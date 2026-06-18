@@ -1,0 +1,22 @@
+server:
+  port: ${PORT:8084}
+
+spring:
+  application:
+    name: ms-auth
+  datasource:
+    url: jdbc:postgresql://dpg-d8carsmrnols739g9lug-a.oregon-postgres.render.com/ventasdb_ttom
+    username: ventas_user
+    password: 5JpBszdsK64EbxWhrQrJlIqHyVxBzNnd
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+jwt:
+  secret: ${JWT_SECRET:grupocordillera-super-secret-key-2024-change-in-production}
+  expiration: 86400000  # 24 horas en ms
