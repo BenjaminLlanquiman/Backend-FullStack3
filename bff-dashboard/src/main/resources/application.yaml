@@ -4,7 +4,9 @@ server:
 spring:
   application:
     name: bff-dashboard
- 
+    
+jwt:
+  secret: ${JWT_SECRET:grupocordillera-jwt-secret-key-2024-produccion-segura-minimo-256bits}
 services:
   ventas-url: https://ms-ventas-2c24.onrender.com
   inventario-url: https://ms-inventario-ar3g.onrender.com
