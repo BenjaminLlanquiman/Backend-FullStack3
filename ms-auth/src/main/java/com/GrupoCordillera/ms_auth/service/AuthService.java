@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
  
+import java.util.List;
+import java.util.stream.Collectors;
+ 
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -48,7 +51,7 @@ public class AuthService {
         try {
             rol = Rol.valueOf(request.getRol().toUpperCase());
         } catch (IllegalArgumentException e) {
-            throw new RuntimeException("Rol inválido: " + request.getRol());
+            throw new RuntimeException("Rol invalido: " + request.getRol());
         }
  
         Usuario usuario = Usuario.builder()
@@ -79,6 +82,32 @@ public class AuthService {
                 .valid(true)
                 .username(jwtUtil.extractUsername(token))
                 .rol(jwtUtil.extractRol(token))
+                .build();
+    }
+ 
+    public List<UsuarioResponse> listarUsuarios() {
+        return usuarioRepository.findAll().stream()
+                .map(u -> UsuarioResponse.builder()
+                        .id(u.getId())
+                        .username(u.getUsername())
+                        .nombre(u.getNombre())
+                        .rol(u.getRol().name())
+                        .activo(u.getActivo())
+                        .build())
+                .collect(Collectors.toList());
+    }
+ 
+    public UsuarioResponse toggleUsuario(Long id) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        usuario.setActivo(!usuario.getActivo());
+        usuarioRepository.save(usuario);
+        return UsuarioResponse.builder()
+                .id(usuario.getId())
+                .username(usuario.getUsername())
+                .nombre(usuario.getNombre())
+                .rol(usuario.getRol().name())
+                .activo(usuario.getActivo())
                 .build();
     }
 }

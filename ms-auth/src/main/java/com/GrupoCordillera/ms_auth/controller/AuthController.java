@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
  
+import java.util.List;
 import java.util.Map;
  
 @RestController
@@ -25,7 +26,6 @@ public class AuthController {
         }
     }
  
-    // Solo ADMIN puede registrar nuevos usuarios
     @PostMapping("/register")
     public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request) {
         try {
@@ -35,10 +35,23 @@ public class AuthController {
         }
     }
  
-    // El BFF llama a este endpoint para validar tokens internamente
     @GetMapping("/validate")
     public ResponseEntity<ValidateResponse> validate(@RequestParam String token) {
         return ResponseEntity.ok(authService.validate(token));
+    }
+ 
+    @GetMapping("/usuarios")
+    public ResponseEntity<List<UsuarioResponse>> listarUsuarios() {
+        return ResponseEntity.ok(authService.listarUsuarios());
+    }
+ 
+    @PatchMapping("/usuarios/{id}/toggle")
+    public ResponseEntity<?> toggleUsuario(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(authService.toggleUsuario(id));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+        }
     }
  
     @GetMapping("/health")
