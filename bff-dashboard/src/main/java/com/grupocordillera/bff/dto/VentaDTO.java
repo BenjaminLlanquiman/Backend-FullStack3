@@ -2,6 +2,7 @@ package com.grupocordillera.bff.dto;
 
 import lombok.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,4 +20,5 @@ public class VentaDTO {
     private String metodoPago;
     private String estado;
     private LocalDateTime fechaVenta;
+    private List<VentaDetalleDTO> detalles;
 }
