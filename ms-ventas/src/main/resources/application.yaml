@@ -1,6 +1,6 @@
 server:
   port: ${PORT:8081}
-
+ 
 spring:
   application:
     name: ms-ventas
@@ -16,3 +16,6 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+ 
+services:
+  inventario-url: https://ms-inventario-ar3g.onrender.com

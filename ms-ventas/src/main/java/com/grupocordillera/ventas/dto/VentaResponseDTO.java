@@ -2,14 +2,14 @@ package com.grupocordillera.ventas.dto;
 
 import lombok.*;
 import java.time.LocalDateTime;
-
+import java.util.List;
+ 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class VentaResponseDTO {
-
     private Long id;
     private String codigoVenta;
     private Long clienteId;
@@ -20,4 +20,5 @@ public class VentaResponseDTO {
     private String metodoPago;
     private String estado;
     private LocalDateTime fechaVenta;
+    private List<VentaDetalleResponse> detalles;
 }

@@ -2,34 +2,27 @@ package com.grupocordillera.ventas.dto;
 
 import jakarta.validation.constraints.*;
 import lombok.*;
+import java.util.List;
+ 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class VentaRequestDTO {
-
-    @NotNull(message = "El clienteId es obligatorio")
+ 
+    @NotNull
     private Long clienteId;
-
-    @NotNull(message = "La sucursalId es obligatoria")
+ 
+    @NotNull
     private Long sucursalId;
-
-    @NotNull
-    @Positive
-    private Double subtotal;
-
-    @NotNull
-    @PositiveOrZero
-    private Double impuesto;
-
-    @NotNull
-    @Positive
-    private Double total;
-
-    @NotBlank(message = "El método de pago es obligatorio")
+ 
+    @NotBlank
     private String metodoPago;
-
-    @NotBlank(message = "El estado es obligatorio")
+ 
+    @NotBlank
     private String estado;
+ 
+    @NotNull @NotEmpty
+    private List<VentaDetalleRequest> detalles;
 }
