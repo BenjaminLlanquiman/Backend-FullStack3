@@ -1,6 +1,6 @@
 package com.grupocordillera.ventas.service.impl;
 
-import com.grupocordillera.client.ventas.InventarioClient;
+import com.grupocordillera.ventas.client.InventarioClient;
 import com.grupocordillera.ventas.dto.*;
 import com.grupocordillera.ventas.exception.VentaNotFoundException;
 import com.grupocordillera.ventas.model.Venta;
